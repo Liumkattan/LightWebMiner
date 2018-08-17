@@ -1,0 +1,29 @@
+
+
+li.nav-item > span.nav-blc {
+  color: lightGrey;
+}
+body {
+  background-color: #282C34;
+  height: 100%;
+  width: 100%;
+  margin 0 0 0 0;
+  padding: 0 0 0 0;
+}
+.beg1 {
+  padding-top: 4em;
+}
+#start {
+  margin: 0 auto;
+  display: block;
+
+  max-width: 25em;
+  height: auto;
+  width: 100%;
+
+  margin-right: auto;
+  margin-left: auto;
+}
+.play {
+  padding-top: 5em;
+}
