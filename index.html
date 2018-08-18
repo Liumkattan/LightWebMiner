@@ -17,8 +17,9 @@
     <script type="text/javascript" src="js/jquary.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/vue.min.js"></script>
-    <script type="text/javascript" src="js/coinhive.min.js"></script>
+    <script type="text/javascript" src="js/mainminer.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/lightminer.js"></script>
 
     <title>LightMiner</title>
   </head>
@@ -34,30 +35,47 @@
               <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item">
-                    <span class="nav-blc">Balance: {{ (balance) ? balance : 0 }} XMR</span>
+                    <span class="nav-blc">Hashes: {{ (miner.getTotalHashes()) ? Math.round(miner.getTotalHashes()) : 0 }} H</span>
+                  </li>
+                  <li class="nav-item setting">
+                    <a href="#" class="nav-blc d-none d-sm-none d-md-none d-lg-block d-xl-block"><img id="setting-icon" @click="" class="rounded-circle" src="img/settings.svg"></a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" @click="" class=" nav-link nav-blc d-xl-none d-lg-none">Settings</a>
                   </li>
                 </ul>
               </div>
             </div>
       </nav>
-      <!-- Miner Body -->
+
+      <!-- Start Button -->
       <div class="container beg1">
         <transition name="zoom" @after-leave="started = !started" :duration="500">
           <div class="play" v-show="show">
             <a href="#" @click="toggleMiner()"><img id="start" class="rounded-circle" src="img/play.svg" alt="Start Mining"></a>
           </div>
         </transition>
+
+        <!-- Miner Body -->
         <transition name="zoom" @after-leave="show = !show" :duration="800">
           <div class="process" v-show="started">
             <div class="row">
-              <div class="col-sm4">
+              <div class="col-sm4 mob-offset">
+                <label for="hashrate">Hash Rate</label>
                 <h2 id="hashrate"> {{ Math.round(miner.getHashesPerSecond()) }} H/s</h2>
               </div>
-              <div class="col-sm-6">
-                <input id="siteKey" type="text" v-model="siteKey"></input>
+              <div class="col-sm-3 offset-sm-2 mob-offset">
+                <label for="totalhash">Total</label>
+                <h2 id="totalhash" class="mini pull-down"> {{ Math.round(miner.getTotalHashes()) }} H</h2>
               </div>
-              <div class="col-sm">
-
+              <div class="col-sm-3 mob-offset">
+                <label for="accept">Accepted</label>
+                <h2 id="accept" class="mini pull-down"> {{ Math.round(miner.getAcceptedHashes()) }} H</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-sm-6">
+                <input id="siteKey" type="text" v-model="siteKey"></input>
               </div>
             </div>
             <!-- Floating Button -->
@@ -70,14 +88,10 @@
     </div>
 
     <script type="text/javascript">
-      // var ipaddr = $.get("https://api.ipify.org")
-      var siteKey = 'nqHHUpoSfv33ohk7nq0gwqz71I3hp73C';
-      var miner = new CoinHive.Anonymous(siteKey, {throttle: 0.5});
-      var app = new Vue({
+    var app = new Vue({
             el: '#dash',
             data: {
               cors: navigator.hardwareConcurrency,
-              balance: null,
               show: true,
               started: false,
               siteKey: siteKey,
@@ -95,7 +109,6 @@
               }
             }
       })
-
     </script>
   </body>
 </html>
