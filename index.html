@@ -111,7 +111,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="siteKey">Site Key</label>
-                <input id="siteKey" type="text" v-model="siteKey"></input>
+                <input id="siteKey" type="text" v-model="siteKey" disabled></input>
               </div>
               <div class="col-sm-6">
                 <span class="span-lab">Threads</span>
@@ -123,6 +123,9 @@
                 <label class="mob-offset"> {{ throttle }}%</label>
               </div>
             </div>
+
+            <!-- Hash Rate Chart -->
+            <vue-chart type="line" :data="chartData"></vue-chart>
 
             <!-- Floating Button -->
             <a href="#" class="float pause-float" @click="toggleMiner()">
@@ -154,9 +157,36 @@
               started: false,
               siteKey: siteKey,
               miner:miner,
+              chartData: {
+                  labels: ['0'],
+                  options: {
+                      scales: {
+                          yAxes: [{
+                              ticks: {
+                                  beginAtZero: true
+                              }
+                          }]
+                      }
+                  },
+                  datasets: [
+                      {
+                          label: 'Hash Rate',
+                          fill: false,
+                          data: [0],
+                          backgroundColor: [
+                            '#3c6bb7',
+                          ],
+                          borderColor: [
+                              '#446870'
+                          ],
+                          borderWidth: 3
+                      }
+                  ]
+              }
             },
             methods: {
               toggleMiner: function(){
+                this.updateChart()
                 if (this.show) {
                   this.miner.start();
                   this.show = false;
@@ -172,9 +202,27 @@
               adjustThrottle: function() {
                 this.miner.setThrottle((100 - this.throttle) / 100)
                 console.log("Throttle adjusted: " + this.miner.getThrottle())
+              },
+              updateChart: function(){
+                if (this.miner.isRunning()) {
+                this.chartData.labels.push(this.now)
+                this.chartData.datasets[0].data.push(this.miner.getHashesPerSecond())
+                }
               }
+            },
+            computed: {
+              now: function() {
+                var nw = new Date()
+                return nw.getHours() + ":" + nw.getMinutes() + ":" + nw.getSeconds()
+              }
+            },
+            mounted() {
+              this.chartData.labels.push(this.now)
+              this.chartData.datasets[0].data.push(0)
+              setInterval(function() {this.app.updateChart(); }, 10000);
             }
       })
+
     </script>
   </body>
 </html>
