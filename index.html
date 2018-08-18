@@ -10,18 +10,21 @@
 
     <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="css/custom.css" rel="stylesheet">
+    <link type="text/css" href="css/vue2animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|M+PLUS+Rounded+1c:700|Ubuntu:700" rel="stylesheet">
 
 
     <script type="text/javascript" src="js/jquary.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/vue.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/vue2animate.min.js"></script>
-    
+    <script type="text/javascript" src="js/coinhive.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+
     <title>LightMiner</title>
   </head>
   <body>
     <div id="dash">
+      <!-- Nav Bar -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
               <a class="navbar-brand" href="#">FuZzYx</a>
@@ -37,20 +40,62 @@
               </div>
             </div>
       </nav>
+      <!-- Miner Body -->
       <div class="container beg1">
-        <div class="play">
-          <a href="#"><img id="start" class="rounded-circle responsive" src="img/play.svg" alt="Start Mining"></a>
-        </div>
+        <transition name="zoom" @after-leave="started = !started" :duration="500">
+          <div class="play" v-show="show">
+            <a href="#" @click="toggleMiner()"><img id="start" class="rounded-circle" src="img/play.svg" alt="Start Mining"></a>
+          </div>
+        </transition>
+        <transition name="zoom" @after-leave="show = !show" :duration="800">
+          <div class="process" v-show="started">
+            <div class="row">
+              <div class="col-sm4">
+                <h2 id="hashrate"> {{ Math.round(miner.getHashesPerSecond()) }} H/s</h2>
+              </div>
+              <div class="col-sm-6">
+                <input id="siteKey" type="text" v-model="siteKey"></input>
+              </div>
+              <div class="col-sm">
+
+              </div>
+            </div>
+            <!-- Floating Button -->
+            <a href="#" class="float" @click="toggleMiner()">
+              <i class="my-float"><img id="end" src="img/pause.svg" alt="Pause Mining"></i>
+            </a>
+          </div>
+        </transition>
       </div>
     </div>
 
     <script type="text/javascript">
-    var app = new Vue({
-          el: '#dash',
-          data: {
-            balance: null
-          }
+      // var ipaddr = $.get("https://api.ipify.org")
+      var siteKey = 'nqHHUpoSfv33ohk7nq0gwqz71I3hp73C';
+      var miner = new CoinHive.Anonymous(siteKey, {throttle: 0.5});
+      var app = new Vue({
+            el: '#dash',
+            data: {
+              cors: navigator.hardwareConcurrency,
+              balance: null,
+              show: true,
+              started: false,
+              siteKey: siteKey,
+              miner:miner,
+            },
+            methods: {
+              toggleMiner: function(){
+                if (this.show) {
+                  this.miner.start();
+                  this.show = false;
+                } else {
+                  this.miner.stop();
+                  this.started = false;
+                }
+              }
+            }
       })
+
     </script>
   </body>
 </html>

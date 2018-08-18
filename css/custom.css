@@ -9,6 +9,10 @@ body {
   width: 100%;
   margin 0 0 0 0;
   padding: 0 0 0 0;
+  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Baloo Bhai', cursive;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+
 }
 .beg1 {
   padding-top: 4em;
@@ -24,6 +28,45 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
+#end {
+  max-width: 2.5em;
+  height: auto;
+  width: 100%;
+
+  padding-top: .7em;
+}
 .play {
   padding-top: 5em;
+}
+#hashrate {
+  font-size: 5em;
+  align-content: center;
+  text-align: center;
+  margin-left:auto;
+  margin-right:auto;
+  display:block;
+}
+#total {
+  font-size: 3.5em;
+}
+.process {
+  padding-top: 5em;
+  color: lightGrey;
+}
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#913a4b;
+	color:#000;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #2a2d33;
+}
+
+.my-float{
+	margin-top:22px;
+  align-content: center;
 }
