@@ -94,6 +94,7 @@ input[type=range] {
   -webkit-appearance: none;
   margin: 10px 0;
   width: 60%;
+  background-color: #282C34;
 }
 input[type=range]:focus {
   outline: none;
@@ -216,4 +217,7 @@ input[type="text"]:focus {
 .modal-body {
   color: lightGrey;
   background-color: #00000000;
+}
+.trans {
+  background-color:#00000000;
 }
