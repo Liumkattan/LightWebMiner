@@ -61,7 +61,6 @@ label {
 }
 .process {
   padding-top: 5em;
-  padding-bottom: 10em;
   color: lightGrey;
 }
 .float{
@@ -220,4 +219,13 @@ input[type="text"]:focus {
 }
 .trans {
   background-color:#00000000;
+}
+.info {
+  padding-top: 4em;
+}
+.info-fotter {
+  padding-bottom: 8em;
+}
+.bod {
+  padding-bottom: 5em
 }

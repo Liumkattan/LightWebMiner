@@ -31,7 +31,7 @@
       <!-- Nav Bar -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container">
-              <a class="navbar-brand" href="#">FuZzYx</a>
+              <a class="navbar-brand" href="#">FuZzYx Miner</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -88,60 +88,69 @@
           </div>
         </transition>
 
+        <!-- Information -->
+        <transition name="bounceRight">
+          <div class="info text-center" v-show="show">
+            <label>This Page is a Demo Dashboared for mining Cryptocurrency, Press the button above to start mining.</label>
+          </div>
+        </transition>
         <!-- Miner Body -->
         <transition name="zoom" @after-leave="show = !show" :duration="800">
           <div class="process" v-show="started">
-            <div class="row">
-              <div class="col-sm4 mob-offset">
-                <label for="hashrate">Hash Rate</label>
-                <h2 id="hashrate"> {{ Math.round(miner.getHashesPerSecond()) }} H/s</h2>
-              </div>
-              <div class="col-sm-3 offset-sm-2 mob-offset">
-                <label for="totalhash">Total</label>
-                <h2 id="totalhash" class="mini pull-down"> {{ Math.round(miner.getTotalHashes()) }} H</h2>
-              </div>
-              <div class="col-sm-3 mob-offset">
-                <label for="accept">Accepted</label>
-                <h2 id="accept" class="mini pull-down"> {{ Math.round(miner.getAcceptedHashes()) }} H</h2>
-              </div>
-            </div>
-
-
-
-            <!-- Fotter -->
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="siteKey">Site Key</label>
-                <input id="siteKey" type="text" v-model="siteKey" disabled></input>
-              </div>
-              <div class="col-sm-6">
-                <span class="span-lab">Threads</span>
-                <input id="slider" type="range" min="1" v-bind:max="cors" v-model:value="threads" @change="adjustThreads"></input>
-                <label class="mob-offset"> {{ threads }}</label>
-
-                <span class="span-lab">Throttle</span>
-                <input id="slider" type="range" min="10" max="90" v-model:value="throttle" @change="adjustThrottle"></input>
-                <label class="mob-offset"> {{ throttle }}%</label>
-              </div>
-            </div>
-
-            <!-- Hash Rate Chart -->
-            <vue-chart type="line" :data="chartData"></vue-chart>
-
-            <!-- Floating Button -->
-            <a href="#" class="float pause-float" @click="toggleMiner()">
-              <i class="my-float"><img id="end" src="img/pause.svg" alt="Pause Mining"></i>
-            </a>
-
-            <!-- Loading Floating Button -->
-            <span v-show="started && !miner.isRunning()" class="float loading-float">
-              <i class="my-float">
-                <div class="span">
-                    <div class="help"></div>
+            <div class="bod">
+              <div class="row">
+                <div class="col-sm4 mob-offset">
+                  <label for="hashrate">Hash Rate</label>
+                  <h2 id="hashrate"> {{ Math.round(miner.getHashesPerSecond()) }} H/s</h2>
                 </div>
-              </i>
-            </span>
+                <div class="col-sm-3 offset-sm-2 mob-offset">
+                  <label for="totalhash">Total</label>
+                  <h2 id="totalhash" class="mini pull-down"> {{ Math.round(miner.getTotalHashes()) }} H</h2>
+                </div>
+                <div class="col-sm-3 mob-offset">
+                  <label for="accept">Accepted</label>
+                  <h2 id="accept" class="mini pull-down"> {{ Math.round(miner.getAcceptedHashes()) }} H</h2>
+                </div>
+              </div>
 
+              <!-- Controllers -->
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="siteKey">Site Key</label>
+                  <input id="siteKey" type="text" v-model="siteKey" disabled></input>
+                </div>
+                <div class="col-sm-6">
+                  <span class="span-lab">Threads</span>
+                  <input id="slider" type="range" min="1" v-bind:max="cors" v-model:value="threads" @change="adjustThreads"></input>
+                  <label class="mob-offset"> {{ threads }}</label>
+
+                  <span class="span-lab">Throttle</span>
+                  <input id="slider" type="range" min="10" max="90" v-model:value="throttle" @change="adjustThrottle"></input>
+                  <label class="mob-offset"> {{ throttle }}%</label>
+                </div>
+              </div>
+
+              <!-- Hash Rate Chart -->
+              <vue-chart type="line" :data="chartData"></vue-chart>
+
+              <!-- Pause Floating Button -->
+              <a href="#" class="float pause-float" @click="toggleMiner()">
+                <i class="my-float"><img id="end" src="img/pause.svg" alt="Pause Mining"></i>
+              </a>
+
+              <!-- Loading Floating Button -->
+              <span v-show="started && !miner.isRunning()" class="float loading-float">
+                <i class="my-float">
+                  <div class="span">
+                      <div class="help"></div>
+                  </div>
+                </i>
+              </span>
+            </div>
+            <!-- Fotter -->
+            <div class="info-fotter text-center">
+              <label>Made by Lium Kattan, Code on <a target="_blank" rel="GitHub repository" href="https://github.com/Liumkattan/LightWebMiner"><img src="img/GitHub-Mark-32px.png"></img></a></label>
+            </div>
           </div>
         </transition>
       </div>
